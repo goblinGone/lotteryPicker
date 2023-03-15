@@ -9,6 +9,7 @@
 #include <random>
 #include <vector>
 #include <chrono>
+#include <algorithm>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -16,14 +17,19 @@ using namespace std::chrono;
 
 int main () {
 system("clear");
+
 vector<int> lowNum;
 vector<int> highNum;
 vector<int> lotto;
+
 random_device rd;
+
 auto start = high_resolution_clock::now();
 auto is_even = 0;
 auto loop_count = 0;
+bool isUnique = true;
 char selection {};
+
 	do {
 		
 		cout <<"*******************************"<<endl;
@@ -36,7 +42,7 @@ char selection {};
 		switch (selection)
 		{
 		case '1':
-			while (is_even != 3){
+			while (is_even != 3 && isUnique){
 			is_even = 0;
 			loop_count = loop_count +1;
 			lowNum.clear();
@@ -44,17 +50,33 @@ char selection {};
 			lotto.clear();
 			cout<<"DEBUG LOOP COUNT :"<<loop_count<<endl;
 
-			for (auto i =1; i <=3; i++){
-				auto num = rd() %19 + 1;
-				lowNum.push_back(num);
-				sort(lowNum.begin(), lowNum.end());
+			for (auto i = 1; i <=3; i++) 
+			{
+				auto num = rd() %19 +1;
+				if (count(lowNum.begin(), lowNum.end(), num)) 
+				{
+					isUnique = false;
 				}
+				else
+				{
+					lowNum.push_back(num);
+					sort(lowNum.begin(), lowNum.end());
+				}
+			}
 
-			for (auto j =1; j <=3; j++){
+			for (auto j = 1; j <=3; j++) 
+			{
 				auto num2 = rd() %20 + 20;
-				highNum.push_back(num2);
-				sort(highNum.begin(), highNum.end());     
+				if (count(highNum.begin(), highNum.end(), num2)) 
+				{
+					isUnique = false;
 				}
+				else
+				{
+					highNum.push_back(num2);
+					sort(highNum.begin(), highNum.end());
+				}
+			}
 
 			//merges the two vectors into a third and prints the output
 			merge(lowNum.begin(), lowNum.end(), highNum.begin(), highNum.end(), back_inserter(lotto));
