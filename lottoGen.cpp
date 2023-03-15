@@ -15,7 +15,7 @@ using namespace std;
 using namespace std::chrono;
 
 int main () {
-
+system("clear");
 vector<int> lowNum;
 vector<int> highNum;
 vector<int> lotto;
@@ -25,8 +25,7 @@ auto is_even = 0;
 auto loop_count = 0;
 char selection {};
 	do {
-		cout<<endl;
-		cout<<endl;
+		
 		cout <<"*******************************"<<endl;
 		cout <<"Lotto num picker "<<endl;
 		cout <<"*******************************"<<endl;
